@@ -1,0 +1,28 @@
+.calc{
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto;
+    height: 100vh;
+}
+.calc__buttons{
+    display: grid;
+    grid-template-columns: 75% 25%;
+    height: 100%;
+}
+.calc__numbers{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+.calc__operators{
+    display: flex;
+    flex-direction: column;
+    
+}
+.calc__operators .calc__key-wrapper{
+    display: flex; 
+    justify-content: center;
+    align-items: center;   
+}

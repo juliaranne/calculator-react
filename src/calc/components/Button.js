@@ -1,5 +1,5 @@
 import React from 'react';
-import './Button.css'; 
+import '../styles/Button.css'; 
 
 const isOperator = val => {
     return !isNaN(val);

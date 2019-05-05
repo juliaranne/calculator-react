@@ -1,5 +1,5 @@
 import React from 'react';
-import './Equals.css';
+import '../styles/Equals.css';
 
 const Equals = props => (
     <span className="calc__key-wrapper calc__key-wrapper--equals">

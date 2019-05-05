@@ -1,76 +1,90 @@
 import React, { Component } from 'react';
-import './Calculator.css';
-import Button from './components/Button';
-import Display from './components/Display';
-import Equals from './components/Equals';
+import '../styles/Calculator.css';
+import Button from './Button';
+import Display from './Display';
+import Equals from './Equals';
 
 class Calculator extends Component {
     constructor(props) {
         super(props);
         this.state = {
             inputValue: 0,
+            subtotal: 0,
+            operator: '',
+            newInput: true,
+            operatorUsed: false,
         };
-        this.subtotal = 0;
-        this.operator = '';
-        this.newInput = true;
-        this.operatorUsed = false;
+       
     }
 
     runFunction(operator, newOperator) {
         if ( operator === '+' ){
-            this.subtotal += parseFloat(this.state.inputValue); 
+            this.setState((prevState) => ({
+                subtotal: prevState.subtotal += parseFloat(this.state.inputValue)
+            })); 
         } else if ( operator === '-' ) {
-            this.subtotal -= parseFloat(this.state.inputValue);
+            this.setState((prevState) => ({
+                subtotal: prevState.subtotal -= parseFloat(this.state.inputValue)
+            })); 
         } else if ( operator === '×' ) {
-            this.subtotal *= parseFloat(this.state.inputValue);
+            this.setState((prevState) => ({
+                subtotal: prevState.subtotal *= parseFloat(this.state.inputValue)
+            })); 
         } else if ( operator === '÷' ) {
-            this.subtotal /= parseFloat(this.state.inputValue);
+            this.setState((prevState) => ({
+                subtotal: prevState.subtotal /= parseFloat(this.state.inputValue)
+            })); 
         }
-        this.setState({
-            inputValue: this.subtotal,
-        });
-        this.operator = newOperator;
+        this.setState((prevState) => ({
+            inputValue: prevState.subtotal,
+            operator: newOperator
+        }));
     }
 
     handleButtonClick = val => {
-        if ( this.newInput === true ){
+        if ( this.state.newInput === true ){
             if ( val === '.' ) {
                 val = `0${val}`;
             } 
             this.setState({
                 inputValue: val,
+                newInput: false
             });
-            this.newInput = false;
         } else {
-            this.setState({
-                inputValue: this.state.inputValue + val,
-            }); 
+            this.setState((prevState) => ({
+                inputValue: prevState.inputValue + val,
+            })); 
         } 
     };
 
     handleOperatorClick = val => {
-        if ( this.operatorUsed === false ){
-            this.operator = val;
-            this.operatorUsed = true;
-            this.subtotal += parseFloat(this.state.inputValue);
+        if ( this.state.operatorUsed === false ){
+            this.setState((prevState) => ({
+                operator: val,
+                operatorUsed: true,
+                subtotal: prevState.subtotal += parseFloat(this.state.inputValue)
+            }));
         } else {
-            this.runFunction(this.operator, val);
+            this.runFunction(this.state.operator, val);
         }
-        this.newInput = true;
+        this.setState({
+            newInput: true
+        })
     }
 
     handleEqualClick = () => {
-        this.runFunction(this.operator);
+        this.runFunction(this.state.operator);
     }
 
     handleClear = () => {
         this.setState({
-            inputValue: 0
+            inputValue: 0,
+            subtotal: 0,
+            operator: '',
+            newInput: true,
+            operatorUsed: false,
         });
-        this.subtotal = 0;
-        this.operator = '';
-        this.newInput = true;
-        this.operatorUsed = false;
+       
     }
 
     render() {
